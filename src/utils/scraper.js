@@ -34,7 +34,7 @@ export const extractAdsFromPage = async (page) => {
             series: tdElements[4]?.textContent?.trim() || "N/A", // Extract the series
             pricePerM2: tdElements[5]?.textContent?.trim() || "N/A", // Extract the price per square meter
             totalPrice: tdElements[6]?.textContent?.trim() || "N/A", // Extract the total price
-            thumbnailUrl: thumbnailImg ? thumbnailImg.src : null // Extract the thumbnail image URL
+            thumbnailUrl: thumbnailImg ? thumbnailImg.src : null // Extract the thumbnail image URL.git
             };
         });
         });

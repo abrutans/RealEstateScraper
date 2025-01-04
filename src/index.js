@@ -12,11 +12,12 @@ const URL = "https://www.ss.lv/lv/real-estate/flats/riga/centre/hand_over/fDgSeF
 
 const getDetailedAds = async () => {
     let browser;
-    let db;
+    let dbClient;
 
     try {
         // Connect to MongoDB
-        db = await getDatabase(DB_NAME);
+        dbClient = await getDatabase(DB_NAME);
+        const db = dbClient.db();
 
         // Launch browser
         browser = await launchBrowser();
@@ -52,11 +53,11 @@ const getDetailedAds = async () => {
         console.log(`Error log saved to ${errorFilePath}`);
     } finally {
         if (browser) {
-            await db.close();
-            await db.client.close();
+            await browser.close();
+            console.log('✅ Browser closed');
         }
-        if (db) {
-            await db.close();
+        if (dbClient) {
+            await dbClient.close();
             console.log('✅ MongoDB connection closed');
         }
     }
