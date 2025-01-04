@@ -1,0 +1,25 @@
+{
+  "name": "scraper",
+  "version": "0.0.1",
+  "description": "A application to scrape ss.lv",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest",
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "web",
+    "Scraper"
+  ],
+  "author": "AndBru",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.8.1",
+    "puppeteer": "^23.7.1"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}
