@@ -13,29 +13,32 @@ export const extractAdsFromPage = async (page) => {
     return await page.evaluate(() => {
         const adElements = document.querySelectorAll("tr[id^='tr_']");
         
+        // Convert NodeList of ad elements to an array and map over each ad element
         return Array.from(adElements).map(ad => {
-            const td_elements = ad.querySelectorAll("td.msga2-o.pp6");
-            const url = ad.querySelector("div.d1 a")?.href || "N/A";
-            const id = ad.getAttribute('id')?.replace('tr_', '') || "N/A";
+            // Select all td elements with class 'msga2-o pp6' within the ad element
+            const tdElements = ad.querySelectorAll("td.msga2-o.pp6");
+            // Select the anchor element within the div with class 'd1'
+            const urlElement = ad.querySelector("div.d1 a");
+            // Select the image element with class 'isfoto' within the ad element
             const thumbnailImg = ad.querySelector("img.isfoto");
-            const thumbnailUrl = thumbnailImg ? thumbnailImg.src : null;
 
+            // Return an object with the extracted ad details
             return {
-                id: id,
-                url: url,
-                title: ad.querySelector("div.d1 a")?.textContent?.trim() || "N/A",
-                location: td_elements[0]?.textContent?.trim() || "N/A",
-                rooms: td_elements[1]?.textContent?.trim() || "N/A",
-                area: td_elements[2]?.textContent?.trim() || "N/A",
-                floor: td_elements[3]?.textContent?.trim() || "N/A",
-                series: td_elements[4]?.textContent?.trim() || "N/A",
-                pricePerM2: td_elements[5]?.textContent?.trim() || "N/A",
-                totalPrice: td_elements[6]?.textContent?.trim() || "N/A",
-                thumbnailUrl: thumbnailUrl
+            id: ad.getAttribute('id')?.replace('tr_', '') || "N/A", // Extract and clean the ad ID
+            url: urlElement ? urlElement.href : "N/A", // Extract the URL of the ad
+            title: urlElement ? urlElement.textContent.trim() : "N/A", // Extract the title of the ad
+            location: tdElements[0]?.textContent?.trim() || "N/A", // Extract the location
+            rooms: tdElements[1]?.textContent?.trim() || "N/A", // Extract the number of rooms
+            area: tdElements[2]?.textContent?.trim() || "N/A", // Extract the area
+            floor: tdElements[3]?.textContent?.trim() || "N/A", // Extract the floor
+            series: tdElements[4]?.textContent?.trim() || "N/A", // Extract the series
+            pricePerM2: tdElements[5]?.textContent?.trim() || "N/A", // Extract the price per square meter
+            totalPrice: tdElements[6]?.textContent?.trim() || "N/A", // Extract the total price
+            thumbnailUrl: thumbnailImg ? thumbnailImg.src : null // Extract the thumbnail image URL
             };
         });
-    });
-};
+        });
+    };
 
 export const extractDetailedInfo = async (page) => {
     return await page.evaluate(() => {
